@@ -9,7 +9,7 @@ A simple AI-powered assistant that simulates Achareh service requests.
 - Dockerized for easy deployment
 
 ## Structure
-"""
+```
 achareh-assistant/
 ├── app/
 │   ├── main.py
@@ -19,7 +19,7 @@ achareh-assistant/
 ├── requirements.txt
 ├── Dockerfile
 └── README.md
-"""
+```
 
 ## Setup
 
