@@ -11,14 +11,14 @@ A simple AI-powered assistant that simulates Achareh service requests.
 ## Structure
 
 achareh-assistant/
-│── app/
+├── app/
 │   ├── main.py
 │   ├── services.py
 │   ├── conversation.py
-│   ├── database.py
-│── requirements.txt
-│── Dockerfile
-│── README.md
+│   └── database.py
+├── requirements.txt
+├── Dockerfile
+└── README.md
 
 
 ## Setup
