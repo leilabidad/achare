@@ -120,6 +120,6 @@ sudo docker rmi achareh-assistant
 
 ---
 
-**Author:** [Your Name]  
+**Author:** Leila Bidad
 **Project:** Achareh Assistant  
 **Version:** 1.0.0  
