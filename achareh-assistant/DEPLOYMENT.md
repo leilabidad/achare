@@ -62,15 +62,17 @@ SELECT * FROM conversations;
 ## 4. Project Structure  
 
 ```
+
 achareh-assistant/
-│
-├── main.py               # Entry point (FastAPI service)
-├── ai_assistant.py       # AI and NLP logic
-├── achareh_api.py        # Integration with Achareh API
-├── database.py           # SQLite database management
-├── requirements.txt      # Python dependencies
-├── Dockerfile            # Docker build file
-└── data/                 # Stores conversation database
+├── app/
+│   ├── main.py
+│   ├── services.py
+│   ├── conversation.py
+│   └── database.py
+├── requirements.txt
+├── Dockerfile
+└── README.md
+
 ```
 
 ---
