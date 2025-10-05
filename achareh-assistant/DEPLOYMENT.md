@@ -1,68 +1,13 @@
-# 🧠 Achareh Assistant — Deployment & Testing Guide
+# Deployment & Testing Guide
 
-## 1. Prerequisites  
-Make sure the following are installed on your system:  
-- **Docker**
-- **Docker Compose** (optional)
-- Internet connection (required for the first image build)
+## Overview
+This document provides step-by-step instructions to **deploy** and **test** the `achareh-assistant` project using Docker.
 
 ---
 
-## 2. Build and Run the Service  
-
-### Build the Docker image:
-```bash
-sudo docker build -t achareh-assistant .
-```
-
-### Run the container:
-```bash
-sudo docker run -d -p 8000:8000 -v $(pwd)/data:/app/data achareh-assistant
-```
-
-🗂 The SQLite database will be automatically created at `./data/conversations.db`.  
-If the `data/` directory does not exist, create it first:
-```bash
-mkdir data
-```
-
----
-
-## 3. Testing the Service  
-
-### 3.1. Send a sample message to the assistant:
-```bash
-curl -X POST http://localhost:8000/chat -H "Content-Type: application/json" -d '{"user_id": 1, "message": "I need home cleaning service"}'
-```
-
-#### Sample Response:
-```json
-{
-  "response": "The home cleaning service is available in your city. Would you like to see the pricing details?",
-  "service_slug": "home-cleaning"
-}
-```
-
----
-
-### 3.2. View stored conversations:
-```bash
-sudo apt install sqlite3
-sqlite3 data/conversations.db
-```
-
-Inside the SQLite shell, run:
-```sql
-.tables;
-SELECT * FROM conversations;
-```
-
----
-
-## 4. Project Structure  
+## 📦 Project Structure
 
 ```
-
 achareh-assistant/
 ├── app/
 │   ├── main.py
@@ -72,37 +17,109 @@ achareh-assistant/
 ├── requirements.txt
 ├── Dockerfile
 └── README.md
-
 ```
 
 ---
 
-## 5. Logs and Maintenance  
+## 🚀 Deployment Instructions
 
-### View container logs:
+### 1. Build the Docker image
+Run the following command inside the `achareh-assistant` directory:
+
 ```bash
-sudo docker logs -f <container_id>
+sudo docker build -t achareh-assistant .
 ```
 
-### Access the container shell:
+---
+
+### 2. Run the container
+To start the application:
+
 ```bash
-sudo docker exec -it <container_id> /bin/bash
+sudo docker run -it -p 8000:8000 achareh-assistant
 ```
 
-### Stop and remove the container:
+If you want to persist the SQLite database on your host system:
+
 ```bash
+sudo mkdir -p $(pwd)/data
+sudo docker run -it -p 8000:8000 -v $(pwd)/data:/app/data achareh-assistant
+```
+
+The application will automatically create or use the database inside `/app/data` within the container.
+
+---
+
+### 3. Verify the service
+After running the container, the API should be available at:
+
+```
+http://localhost:8000/
+```
+
+If you're testing with `curl`:
+
+```bash
+curl -X POST http://localhost:8000/conversation -H "Content-Type: application/json" -d '{"message": "Hello"}'
+```
+
+---
+
+## 🧪 Testing
+
+You can run the service locally without Docker as well:
+
+```bash
+cd app
+pip install -r ../requirements.txt
+python3 main.py
+```
+
+By default, the server runs on port `8000`.
+
+---
+
+## 🗂 Database
+
+The SQLite database file (`conversations.db`) is automatically created when the app runs for the first time.  
+To inspect the database:
+
+```bash
+sqlite3 conversations.db
+.tables
+```
+
+---
+
+## 🧹 Clean Up
+
+To stop and remove containers:
+
+```bash
+sudo docker ps
 sudo docker stop <container_id>
 sudo docker rm <container_id>
 ```
 
----
+To remove the image:
 
-## 6. Notes  
-
-- The SQLite database is stored at `/app/data/conversations.db` and mapped to the host machine using Docker volume.  
-- The project is designed with a simple, scalable, and modular architecture for easy extension.  
-- New endpoints can be added easily to handle additional Achareh services.  
+```bash
+sudo docker rmi achareh-assistant
+```
 
 ---
 
-✅ **The project is now ready for deployment and testing.**
+## ✅ Summary
+
+| Task | Command |
+|------|----------|
+| Build image | `sudo docker build -t achareh-assistant .` |
+| Run container | `sudo docker run -it -p 8000:8000 achareh-assistant` |
+| Run with volume | `sudo docker run -it -p 8000:8000 -v $(pwd)/data:/app/data achareh-assistant` |
+| Local run | `python3 app/main.py` |
+
+---
+
+**Author:** [Your Name]  
+**Project:** Achareh Assistant  
+**Version:** 1.0.0  
